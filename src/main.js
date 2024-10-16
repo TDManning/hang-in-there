@@ -20,6 +20,7 @@ const images = [
   "./assets/tiger.jpg",
   "./assets/turtle.jpg"
 ];
+
 const titles = [
   "determination",
   "success",
@@ -57,6 +58,7 @@ const titles = [
   "understanding",
   "wisdom"
 ];
+
 const quotes = [
   "Don’t downgrade your dream just to fit your reality, upgrade your conviction to match your destiny.",
   "You are braver than you believe, stronger than you seem and smarter than you think.",
@@ -97,6 +99,7 @@ const quotes = [
   "Each person must live their life as a model for others.",
   "A champion is defined not by their wins but by how they can recover when they fall."
 ];
+
 let unmotivationalPosters = [
   {
     name: "FAILURE",
@@ -227,13 +230,26 @@ var currentPoster;
 var posterImage = document.querySelector(".poster-img")
 var posterTitle = document.querySelector(".poster-title")
 var posterQuote = document.querySelector(".poster-quote")
+
 var userPosterImage = document.querySelector("#poster-image-url")
 var userPosterTitle = document.querySelector("#poster-title")
 var userPosterQuote = document.querySelector("#poster-quote")
+
 var mainPosterViewSection = document.querySelector(".main-poster")
 var OwnPosterFormSection = document.querySelector(".poster-form")
 var savedPostersSection = document.querySelector(".saved-posters")
 var savedPostersGrid = document.querySelector(".saved-posters-grid")
+var unmotivationalPostersSection = document.querySelector(".unmotivational-section")
+var unmotivationalGrid = document.querySelector("#unmotivational-grid")
+var saveMessage = document.querySelector("#save-message")
+
+var posterModal = document.getElementById("posterModal")
+var modalPosterImg = document.getElementById("modalPosterImg")
+var modalPosterTitle = document.getElementById("modalPosterTitle")
+var modalPosterQuote = document.getElementById("modalPosterQuote")
+var savedPostersGrid = document.querySelector(".saved-posters-grid")
+var modalContent = posterModal.querySelector('.modal-content');
+
 var makeOwnPosterButton = document.querySelector(".show-form")
 var showSavedPostersButton = document.querySelector(".show-saved")
 var showMainPageButton = document.querySelector(".show-main")
@@ -243,19 +259,15 @@ var showRandomPosterButton = document.querySelector(".show-random")
 var savePosterButton = document.querySelector('.save-poster')
 var showUserPosterButton = document.querySelector(".make-poster")
 var showUnmotivationalPostersButton = document.querySelector(".show-unmotivational")
-var unmotivationalPostersSection = document.querySelector(".unmotivational-section")
-var unmotivationalGrid = document.querySelector("#unmotivational-grid")
-var saveMessage = document.querySelector("#save-message")
-var posterModal = document.getElementById("posterModal")
-var modalPosterImg = document.getElementById("modalPosterImg")
-var modalPosterTitle = document.getElementById("modalPosterTitle")
-var modalPosterQuote = document.getElementById("modalPosterQuote")
-var closeModalButton = document.querySelector(".close-modal")
-var savedPostersGrid = document.querySelector(".saved-posters-grid")
-var modalContent = posterModal.querySelector('.modal-content');
+var closeModalSection = document.querySelector(".close-modal")
 
 // event listeners go here 👇
 window.addEventListener("load", showRandomHomepagePoster)
+window.addEventListener("click", handleOutsideClick)
+closeModalSection.addEventListener("click", closePosterModal) 
+unmotivationalGrid.addEventListener("dblclick", deleteUnmotivationalPoster) 
+savedPostersGrid.addEventListener("click", handlePosterClick)
+
 makeOwnPosterButton.addEventListener("click", function() {handleView('form')})
 showSavedPostersButton.addEventListener("click", function() {handleView('saved'); displaySavedPosters()})
 showMainPageButton.addEventListener("click", function() {handleView('main')})
@@ -264,11 +276,7 @@ showUserPosterButton.addEventListener("click", function() {handleView('main'); s
 backToMainFromUnmotivationalButton.addEventListener("click", function() {handleView('main')})
 showUnmotivationalPostersButton.addEventListener("click", function() {handleView('unmotivational'); displayCleanedPosters (cleanData(unmotivationalPosters))}); 
 showRandomPosterButton.addEventListener("click", showRandomHomepagePoster)
-savePosterButton.addEventListener("click", saveCurrentPoster)
-unmotivationalGrid.addEventListener("dblclick", deleteUnmotivationalPoster) 
-savedPostersGrid.addEventListener("click", handlePosterClick) 
-closeModalButton.addEventListener("click", closePosterModal) 
-window.addEventListener("click", handleOutsideClick)
+savePosterButton.addEventListener("click", saveCurrentPoster) 
 
 // functions and event handlers go here 👇
 function getRandomIndex(array) {
@@ -293,10 +301,8 @@ function handleView(view) {
   }
   Object.values(views).forEach((section) => {
     section.classList.add("hidden")
-    // console.log(Object.values(views))
   })
   views[view].classList.remove("hidden")
-  // console.log(views[view])
 }
 
 function showPoster(imageURL, title, quote) {
@@ -312,7 +318,6 @@ function showPoster(imageURL, title, quote) {
 }
 
 function showRandomHomepagePoster() {
-
   saveMessage.classList.add("hidden")
 
   let randomImage = images[getRandomIndex(images)];
@@ -320,10 +325,10 @@ function showRandomHomepagePoster() {
   let randomQuote = quotes[getRandomIndex(quotes)];
 
   showPoster(randomImage, randomTitle, randomQuote)
-  };
+  }
 
 function showUserCreatedPoster(event) {
-  event.preventDefault();
+  event.preventDefault()
 
   saveMessage.classList.add("hidden")
 
@@ -341,6 +346,7 @@ function showUserCreatedPoster(event) {
     </div>`
 
   savedPostersGrid.innerHTML += userPosterHTML
+
   showPoster(userImage, userTitle, userQuote)
 }
 
@@ -358,12 +364,9 @@ if (!savedPosters.some((poster) => {
   })) {
     savedPosters.push(currentPoster)
     saveMessage.classList.add("hidden")
-    // console.log("Poster saved:", currentPoster);
-    // console.log("Saved Posters Array:", savedPosters); 
   } else {
     saveMessage.innerText = "Duplicate poster! This poster cannot be saved."
     saveMessage.classList.remove("hidden")
-    // console.log("Poster is already saved");
   }
 }
 
@@ -386,13 +389,10 @@ function cleanData(posters) {
       quote: poster.description, 
     }
   })
-    // console.log("Cleaned Data:", cleanedData)
   return cleanedData
 }
-// console.log(cleanData(unmotivationalPosters))
 
 function displayCleanedPosters(posters) {
-  console.log("Rendering the following posters:", posters)
   unmotivationalGrid.innerHTML = posters.map((poster, index) => { 
     return ` 
       <div class="mini-poster mini-poster-unmotivational" data-id="${index}"> 
@@ -402,33 +402,30 @@ function displayCleanedPosters(posters) {
       </div>` 
   }).join('')
 }
-// console.log(displayCleanedPosters(unmotivationalPosters))
 
 function deleteUnmotivationalPoster(event) {
-  const posterElement = event.target.closest(".mini-poster");
+  const posterElement = event.target.closest(".mini-poster")
 
   if (posterElement) {
-    const posterId = parseInt(posterElement.getAttribute("data-id")); 
-      console.log("Deleting poster with ID:", posterId);
+    const posterId = parseInt(posterElement.getAttribute("data-id")) 
 
-    unmotivationalPosters.splice(posterId, 1);
+    unmotivationalPosters.splice(posterId, 1)
 
-    let cleanedData = cleanData(unmotivationalPosters); 
-    displayCleanedPosters(cleanedData); 
-
-    console.log("Unmotivational posters after deletion:", unmotivationalPosters);
+    let cleanedData = cleanData(unmotivationalPosters)
+    displayCleanedPosters(cleanedData)
   }
 }
 
 function showPosterModal(poster) {
-  modalPosterImg.src = poster.imageURL;
-  modalPosterTitle.innerText = poster.title;
-  modalPosterQuote.innerText = poster.quote;
-  handleView('modal'); 
+  modalPosterImg.src = poster.imageURL
+  modalPosterTitle.innerText = poster.title
+  modalPosterQuote.innerText = poster.quote
+
+  handleView('modal')
 }
 
 function closePosterModal() {
-  handleView('saved'); 
+  handleView('saved')
 }
 
 function handlePosterClick(event) {
@@ -437,6 +434,7 @@ function handlePosterClick(event) {
   if (clickedPoster) {
     const posterIndex = Array.from(savedPostersGrid.children).indexOf(clickedPoster) 
     const selectedPoster = savedPosters[posterIndex]
+
     showPosterModal(selectedPoster); 
   }
 }
