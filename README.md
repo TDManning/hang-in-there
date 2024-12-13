@@ -40,7 +40,7 @@ https://github.com/TDManning</br>
 [//]: <> 
 1. Practice reading, understanding, and using existing code
 2. Write clean, DRY JavaScript
-  * Build out funcitonality using functions that6 show trends toward SRP
+  * Build out funcitonality using functions that show trends toward SRP
   * Manipulate the page after it has loaded by adding, removing, and updating elements on the DOM
 3. Use CSS and HTML to match styling and layout of provided comps
 
