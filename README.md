@@ -10,9 +10,8 @@ This "Motivational Posters" project generates a random motivational poster to in
 2. Clone down your new, forked repo
 3. `cd` into the repository
 4. Open it in your text editor
-5. Add the instructors as collaborators on the repository
 
-Project spec & rubric can be found [here](https://curriculum.turing.edu/module2/projects/hang-in-there/index)
+Project spec & rubric can be found [here](https://frontend.turing.edu/projects/module-1/hang-in-there-v2.html)
 
 To view your project:
 
@@ -41,7 +40,7 @@ https://github.com/TDManning</br>
 [//]: <> 
 1. Practice reading, understanding, and using existing code
 2. Write clean, DRY JavaScript
-  * Build out funcitonality using functions that6 show trends toward SRP
+  * Build out funcitonality using functions that show trends toward SRP
   * Manipulate the page after it has loaded by adding, removing, and updating elements on the DOM
 3. Use CSS and HTML to match styling and layout of provided comps
 

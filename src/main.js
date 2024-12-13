@@ -306,15 +306,16 @@ function handleView(view) {
 }
 
 function showPoster(imageURL, title, quote) {
-  posterImage.src = imageURL
-  posterTitle.innerText = title
-  posterQuote.innerText = quote
 
   currentPoster = {
     imageURL: imageURL,
     title: title,
     quote: quote
   }
+
+  posterImage.src = imageURL
+  posterTitle.innerText = title
+  posterQuote.innerText = quote
 }
 
 function showRandomHomepagePoster() {
@@ -370,6 +371,34 @@ if (!savedPosters.some((poster) => {
   }
 }
 
+// function saveCurrentPoster() {            
+
+//     console.log("Current poster to save:", currentPoster);
+
+//   const isDuplicate = savedPosters.some((poster) => {      
+//     return  poster.imageURL === currentPoster.imageURL &&
+//             poster.title === currentPoster.title &&
+//             poster.quote === currentPoster.quote;
+//   });
+
+//     console.log("Is duplicate poster:", isDuplicate);
+
+//   if (!isDuplicate) {
+
+//     savedPosters.push(currentPoster);
+//       console.log("Poster saved successfully!");
+//       console.log("Updated savedPosters array:", savedPosters);
+
+//     saveMessage.classList.add("hidden");
+//   } else {
+
+//       console.warn("Duplicate poster! Not saved.");
+//     saveMessage.innerText = "Duplicate poster! This poster cannot be saved.";
+//     saveMessage.classList.remove("hidden");
+//   }
+// }
+
+
 function displaySavedPosters() {
   savedPostersGrid.innerHTML = savedPosters.map((poster) => {
     return `
@@ -416,6 +445,27 @@ function deleteUnmotivationalPoster(event) {
   }
 }
 
+// function deleteUnmotivationalPoster(event) {
+//   const posterElement = event.target.closest(".mini-poster");
+
+//   if (posterElement) {
+//     const posterId = parseInt(posterElement.getAttribute("data-id"));
+//     console.log("Poster ID (index to delete):", posterId);
+
+//     console.log("Before deletion - unmotivationalPosters:", [...unmotivationalPosters]);
+
+//     if (posterId >= 0 && posterId < unmotivationalPosters.length) {
+//       const removedPoster = unmotivationalPosters.splice(posterId, 1);
+//       console.log("Removed poster:", removedPoster);
+//     } else {
+//     }
+//       console.log("After deletion - unmotivationalPosters:", [...unmotivationalPosters]);
+
+//     let cleanedData = cleanData(unmotivationalPosters);
+//     displayCleanedPosters(cleanedData);
+//   }
+// }
+
 function showPosterModal(poster) {
   modalPosterImg.src = poster.imageURL
   modalPosterTitle.innerText = poster.title
@@ -438,6 +488,23 @@ function handlePosterClick(event) {
     showPosterModal(selectedPoster); 
   }
 }
+
+// function handlePosterClick(event) {
+
+// const clickedPoster = event.target.closest(".mini-poster")
+
+//   if (clickedPoster) {
+//       const gridChildren = Array.from(savedPostersGrid.children);
+//     console.log("Saved posters grid children:", gridChildren);
+
+//     const posterIndex = gridChildren.indexOf(clickedPoster);
+//       console.log("Index of clicked poster:", posterIndex);
+
+//     const selectedPoster = savedPosters[posterIndex];
+//       console.log("Selected poster:", selectedPoster);
+//   showPosterModal(selectedPoster); 
+// }
+// }
 
 function handleOutsideClick(event) {
   if (event.target == posterModal) {
